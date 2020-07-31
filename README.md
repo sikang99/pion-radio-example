@@ -1,4 +1,4 @@
-# pion-radio-example
+## pion-radio-example
 
 > Audio (G.711, PCMU) Streaming Example
 
@@ -6,18 +6,19 @@
 ### Usage
 1. start the server
     ```
-    $ make rs`
+    $ make rs (run-server)
     ```
 
 2. shoot audio data to udp port
     ```
     $ cd audio
-    $ make fs
+    $ make fs (ffmpeg-streaming)
     ```
 
 3. open the web page
     ```
     open http://localhost:8080/static/rtp-radio.html
+    press "start session"
     ```
 
 
