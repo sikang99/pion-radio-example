@@ -23,5 +23,7 @@
 
 ### Reference
 - [scottstensland/websockets-streaming-audio](https://github.com/scottstensland/websockets-streaming-audio)
+- [WebSocketAudioPlayer](https://archive.codeplex.com/?p=websocketaudioplayer)
+- [mohayonao/audio-worker-node](https://github.com/mohayonao/audio-worker-node)
 
 
