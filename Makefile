@@ -3,6 +3,7 @@
 #
 CLIENT=
 SERVER=sfu-server
+VERSION=0.0.1.0
 #----------------------------------------------------------------------------------
 .PHONY: usage edit build clean docker compose git
 usage:
@@ -74,7 +75,7 @@ git g:
 	@echo "> make (git:g) [update|store]"
 git-update gu:
 	git add .
-	git commit -a -m "0.0.1.0"
+	git commit -a -m $(VERSION)
 	git push
 git-store gs:
 	git config credential.helper store
