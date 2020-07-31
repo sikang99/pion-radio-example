@@ -1,0 +1,98 @@
+<html>
+
+<head>
+<style>
+textarea {
+    width: 500px;
+    min-height: 75px;
+}
+video {
+  width: 50%;
+}
+</style>
+</head>
+
+<body>
+<h3>WebRTC RTP(UDP) Audio Play Example</h3> 
+<br />
+Browser base64 Session Description<br />
+<textarea id="localSessionDescription" readonly="true"></textarea> <br />
+
+Golang base64 Session Description<br />
+<textarea id="remoteSessionDescription"> </textarea> <br/>
+<button onclick="window.startSession()"> Start Session </button><br />
+<br />
+
+Audio<br />
+<div id="remoteAudio"></div> <br />
+
+Logs<br />
+<div id="div"></div>
+</body>
+
+<script>
+let pc = new RTCPeerConnection()
+let log = msg => {
+  document.getElementById('div').innerHTML += msg + '<br>'
+}
+
+//-----------------------------------------------------------------------------
+var lsd = document.getElementById('localSessionDescription')
+var rsd = document.getElementById('remoteSessionDescription')
+
+pc.ontrack = function (event) {
+  var el = document.createElement(event.track.kind)
+  el.srcObject = event.streams[0]
+  el.autoplay = true
+  el.controls = true
+
+  document.getElementById('remoteAudio').appendChild(el)
+}
+
+pc.oniceconnectionstatechange = e => log(pc.iceConnectionState)
+pc.onicecandidate = event => {
+  if (event.candidate === null) {
+    lsd.value = btoa(JSON.stringify(pc.localDescription))
+  }
+}
+
+pc.addTransceiver('audio', {'direction': 'recvonly'})
+pc.createOffer().then(d => pc.setLocalDescription(d)).catch(log)
+
+//-----------------------------------------------------------------------------
+function setURL(upath) {
+  let url = null
+  if (window.location.protocol == 'https:') {
+		url = 'https://' + window.location.hostname + ':8080' + upath;
+	} else {
+		url = 'http://' + window.location.hostname + ':8080' + upath;
+  }
+  return url
+}
+
+//-----------------------------------------------------------------------------
+const fetchPost = async (url, input) => {
+    const response = await fetch(url, {method: "POST", body: input});
+    const output = await response.text();
+    return output
+  }
+
+//-----------------------------------------------------------------------------
+window.startSession = async () => {
+  url = setURL("/sdp")
+  result = await fetchPost(url, lsd.value)
+  rsd.value = result;
+
+  if (rsd.value === '') {
+    return alert('Session Description must not be empty')
+  }
+
+  try {
+    pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(atob(rsd.value))))
+  } catch (e) {
+    alert(e)
+  }
+}
+  
+</script>
+</html>

@@ -1,2 +1,3 @@
 # pion-radio-example
-Simple WebRTC Radio Server
+
+> Audio (G.711, PCMU) Streaming Example
