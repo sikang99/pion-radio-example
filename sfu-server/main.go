@@ -74,9 +74,8 @@ func main() {
 
 	go RecvDataToTrack(udp, localTrack)
 
+	log.Println("Now waiting for audio player connections ...")
 	for {
-		log.Println("Now waiting for audio player connections ...")
-
 		recvOnlyOffer := webrtc.SessionDescription{}
 		signal.Decode(<-sdpInChan, &recvOnlyOffer)
 
