@@ -60,6 +60,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	log.Println("SSRC:", packet.SSRC)
 
 	localTrack, err := pubConn.NewTrack(webrtc.DefaultPayloadTypePCMU, packet.SSRC, "audio", "spider")
 	if err != nil {
@@ -74,7 +75,7 @@ func main() {
 	go RecvDataToTrack(udp, localTrack)
 
 	for {
-		log.Println("Now waiting to start player(sendonly peer) connections ...")
+		log.Println("Now waiting for audio player connections ...")
 
 		recvOnlyOffer := webrtc.SessionDescription{}
 		signal.Decode(<-sdpInChan, &recvOnlyOffer)
