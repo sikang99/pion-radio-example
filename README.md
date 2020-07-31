@@ -9,7 +9,7 @@
     $ make rs (run-server)
     ```
 
-2. shoot audio data(sample.wav) to udp port(1234)
+2. shoot audio data (sample.wav) to udp port (1234)
     ```
     $ cd audio
     $ make fs (ffmpeg-streaming)
