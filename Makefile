@@ -74,7 +74,7 @@ git g:
 	@echo "> make (git:g) [update|store]"
 git-update gu:
 	git add .
-	git commit -a -m "create internal/util package"
+	git commit -a -m "0.0.1.0"
 	git push
 git-store gs:
 	git config credential.helper store
